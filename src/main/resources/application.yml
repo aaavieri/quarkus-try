@@ -1,0 +1,14 @@
+quarkus:
+  arc:
+    exclude-types:
+      - cn.yjl.dto.*
+  datasource:
+    jdbc: false
+    db-kind: mysql
+  native:
+    native-image-xmx: 10000M
+
+smallrye:
+  config:
+    locations:
+      - ./external.yml

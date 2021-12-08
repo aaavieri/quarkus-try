@@ -1,0 +1,30 @@
+quarkus:
+  http:
+    port: 8081
+  datasource:
+    jdbc: false
+    db-kind: mysql
+    username: root
+    password: yinjiaolong
+    reactive:
+      url: mysql://127.0.0.1:3306/wwx
+      max-size: 20
+      mysql:
+        charset: utf8
+  redis:
+    hosts:
+      - redis://localhost:6379
+  log:
+    level: DEBUG
+    file:
+      enable: true
+      path: ./log/quarkus-try/try.log
+    category:
+      "org.hibernate.hql.internal.ast.QueryTranslatorImpl":
+        level: DEBUG
+      "cn.yjl":
+        level: DEBUG
+  hibernate-orm:
+    dialect: org.hibernate.dialect.MySQLDialect
+    packages:
+      - cn.yjl.entity
