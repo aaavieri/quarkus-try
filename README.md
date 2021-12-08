@@ -22,6 +22,7 @@
 ## 3、为什么使用Kotlin
 + 很简单，Kotlin的Coroutine可以把原本的异步代码写在同步，大大减少了程序员的心智负担，举个例子
 
+java代码：
 ```java
         return this.getA(id).chain(aInfo -> {
             return BInfo.findById(aInfo.bid);
@@ -34,6 +35,7 @@
             return resDto;
         });
 ```
+kotlin代码：
 ```kotlin
         val aInfo: AInfo = this.getA(id).awaitSuspending()
         val bInfo: BInfo = BInfo.findById(aInfo.bid).awaitSuspending() ?: throw NoDataException()
@@ -46,12 +48,15 @@
 ## 4、使用Kotlin遇到的坑
 + quarkus-hibernate-panache有一个支持Kotlin的版本，但是不支持reactive，所以性能会差一些，弃用。
 + quarkus-hibernate-panache的java的entity直接转成kotlin不能直接使用，默认的panache entity采用如下的static方法来操作数据库，而Kotlin是没有static方法的，而是采用companion object来对应Java的static方法，而companion object其实是不属于entity类的，所以在执行的时候会报错，因为关联不到entity类
+
+java代码
 ```java
     // java方法
     public static Uni<AInfo> findByCode(String aCode) {
         return find("aCode = ?1 and deleteType = ?2", aCode, 0).firstResult();
     }
 ```
+kotlin代码
 ```kotlin
     // kotlin方法
     companion object {
